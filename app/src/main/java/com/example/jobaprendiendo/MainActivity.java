@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,12 +20,14 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     private static  final int JOB_ID = 1;
+    private TextView tvMensaje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        tvMensaje = findViewById(R.id.tvMensaje);
 
     }
     private BroadcastReceiver airplaneReceiver = new BroadcastReceiver() {
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                 mensaje = "Modo Avion Desactivado";
             }
             Toast.makeText(context,mensaje,Toast.LENGTH_SHORT).show();
+            if (tvMensaje != null) {
+                tvMensaje.setText(mensaje);
+            }
             JobInfo jobInfo = getJobInfo(MainActivity.this);
             JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             if (scheduler !=null){
